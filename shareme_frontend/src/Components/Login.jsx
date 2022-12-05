@@ -5,11 +5,13 @@ import GoogleLogin from 'react-google-login';
 import { gapi } from 'gapi-script';
 import { useNavigate } from 'react-router-dom';
 import {FcGoogle} from 'react-icons/fc'
+import { client } from '../Container/client';
+
 
 const Login = () => {
 
   const clientId = process.env.REACT_APP_GOOGLE_API_TOKEN
-
+  const navigate = useNavigate()
 
 useEffect(() => {
    const initClient = () => {
@@ -28,13 +30,14 @@ localStorage.setItem('user', JSON.stringify(response.profileObj))
 const  { name, googleId, imageUrl } = response.profileObj;
 
 const doc = {
-  _id:googleId,
+  _id:googleId, 
   _type: 'user',
   userName: name,
   image: imageUrl
   }
+  
+  client.createIfNotExists(doc).then(() => { navigate('/', { replace:true })})
 }
-
 
 
   return (
