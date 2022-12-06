@@ -6,6 +6,7 @@ import { gapi } from 'gapi-script';
 import { useNavigate } from 'react-router-dom';
 import {FcGoogle} from 'react-icons/fc'
 import { client } from '../Container/client';
+import jwt_decode from 'jwt-decode'
 
 
 const Login = () => {
@@ -35,8 +36,9 @@ const doc = {
   userName: name,
   image: imageUrl
   }
-  
+
   client.createIfNotExists(doc).then(() => { navigate('/', { replace:true })})
+  console.log(doc);
 }
 
 
